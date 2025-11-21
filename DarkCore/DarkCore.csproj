@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+    
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+        <ProjectGuid>{2AFA7C6C-97CC-4690-94AE-783D66DE33C1}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>DarkCore</RootNamespace>
+        <AssemblyName>DarkCore</AssemblyName>
+        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <FileAlignment>512</FileAlignment>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+      <DebugType>pdbonly</DebugType>
+      <Optimize>true</Optimize>
+      <DefineConstants>TRACE</DefineConstants>
+      <ErrorReport>prompt</ErrorReport>
+      <WarningLevel>4</WarningLevel>
+      <OutputPath>bin\x64\Release\</OutputPath>
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>embedded</DebugType>
+        <Optimize>false</Optimize>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+      <OutputPath>bin\x64\Debug\</OutputPath>
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <Reference Include="0Harmony, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL"><HintPath>..\packages\Lib.Harmony.2.4.2\lib\net48\0Harmony.dll</HintPath></Reference>
+        <Reference Include="LiteDB, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL"><HintPath>..\packages\LiteDB.6.0.0-prerelease.73\lib\netstandard2.0\LiteDB.dll</HintPath></Reference>
+        
+        <Reference Include="mscorlib" />
+        <Reference Include="System"/>
+        <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"><HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath></Reference>
+        <Reference Include="System.Collections.NonGeneric, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"><HintPath>..\packages\System.Collections.NonGeneric.4.3.0\lib\net46\System.Collections.NonGeneric.dll</HintPath></Reference>
+        <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"><HintPath>..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath></Reference>
+        <Reference Include="System.ComponentModel.TypeConverter, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"><HintPath>..\packages\System.ComponentModel.TypeConverter.4.3.0\lib\net462\System.ComponentModel.TypeConverter.dll</HintPath></Reference>
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Data"/>
+        <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"><HintPath>..\packages\System.Memory.4.5.0\lib\netstandard2.0\System.Memory.dll</HintPath></Reference>
+        <Reference Include="System.Numerics" />
+        <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"><HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath></Reference>
+        <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"><HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath></Reference>
+        <Reference Include="System.Xml"/>
+
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(SL_MANAGED)\Assembly-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="Assembly-CSharp-firstpass">
+            <HintPath>$(SL_MANAGED)\Assembly-CSharp-firstpass.dll</HintPath>
+        </Reference>
+        <Reference Include="CommandSystem.Core">
+            <HintPath>$(SL_MANAGED)\CommandSystem.Core.dll</HintPath>
+        </Reference>
+        <Reference Include="Mirror">
+            <HintPath>$(SL_MANAGED)\Mirror.dll</HintPath>
+        </Reference>
+        <Reference Include="LabApi">
+            <HintPath>$(SL_MANAGED)\LabApi.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(SL_MANAGED)\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.PhysicsModule">
+            <HintPath>$(SL_MANAGED)\UnityEngine.PhysicsModule.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Compile Include="DarkCore.cs" />
+        <Compile Include="Modules\Mandatory\Placeholders\Patches\PlayerPatch.cs" />
+        <Compile Include="Modules\Mandatory\Placeholders\Placeholders.cs" />
+        <Compile Include="Modules\Mandatory\Watermark\Watermark.cs" />
+        <Compile Include="Modules\Optional\AssignRoles\AssignRoles.cs" />
+        <Compile Include="Modules\Optional\AssignRoles\Commands\AssignRolesCommand.cs" />
+        <Compile Include="Modules\Optional\AutoBroadcast\AutoBroadcast.cs" />
+        <Compile Include="Modules\Optional\AutoBroadcast\AutoBroadcastConfig.cs" />
+        <Compile Include="Modules\Optional\GroupLimits\GroupLimits.cs" />
+        <Compile Include="Modules\Optional\GroupLimits\GroupLimitsConfig.cs" />
+        <Compile Include="Modules\Optional\InfiniteRadio\InfiniteRadio.cs" />
+        <Compile Include="Modules\Optional\LastTeamAlive\LastTeamAlive.cs" />
+        <Compile Include="Modules\Optional\LastTeamAlive\LastTeamAliveConfig.cs" />
+        <Compile Include="Modules\Optional\ScpBreakingDoors\Patches\Scp939ClawAbilityPatch.cs" />
+        <Compile Include="Modules\Optional\ScpBreakingDoors\ScpBreakingDoors.cs" />
+        <Compile Include="Modules\Optional\ScpBreakingDoors\ScpBreakingDoorsConfig.cs" />
+        <Compile Include="Modules\Optional\TemporaryMute\Commands\TemporaryMuteCommand.cs" />
+        <Compile Include="Modules\Optional\TemporaryMute\Commands\UnmuteCommand.cs" />
+        <Compile Include="Modules\Optional\TemporaryMute\Models\TemporaryMute.cs" />
+        <Compile Include="Modules\Optional\TemporaryMute\TemporaryMute.cs" />
+        <Compile Include="Modules\Optional\TemporaryMute\TemporaryMuteConfig.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Utilities\CommandManager\CommandManager.cs" />
+        <Compile Include="Utilities\ModuleManager\Abstracts\Module.cs" />
+        <Compile Include="Utilities\ModuleManager\Abstracts\Module{TConfig}.cs" />
+        <Compile Include="Utilities\ModuleManager\Commands\DisableModuleCommand.cs" />
+        <Compile Include="Utilities\ModuleManager\Commands\EnableModuleCommand.cs" />
+        <Compile Include="Utilities\ModuleManager\Commands\ModuleListCommand.cs" />
+        <Compile Include="Utilities\ModuleManager\Commands\PermDisableModuleCommand.cs" />
+        <Compile Include="Utilities\ModuleManager\Commands\PermEnableModuleCommand.cs" />
+        <Compile Include="Utilities\ModuleManager\Configuration\Properties.cs" />
+        <Compile Include="Utilities\ModuleManager\ModuleConfig.cs" />
+        <Compile Include="Utilities\ModuleManager\ModuleManager.cs" />
+        <Compile Include="Utilities\ModuleManager\ModuleProperties.cs" />
+        <Compile Include="Utilities\Parser\PlayerParser.cs" />
+        <Compile Include="Utilities\Parser\TimeParser.cs" />
+    </ItemGroup>
+    
+    <!-- Debug module -->
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <Compile Include="Modules\Optional\DebugModule\DebugModule.cs" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <None Include="packages.config" />
+    </ItemGroup>
+
+    <Target Name="CopyDebugOutput" AfterTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
+        <Copy SourceFiles="$(OutputPath)0Harmony.dll" DestinationFolder="$(HOME)/SCPSL-Dev/.config/SCP Secret Laboratory/LabAPI/dependencies/global/" />
+        <Copy SourceFiles="$(OutputPath)LiteDB.dll" DestinationFolder="$(HOME)/SCPSL-Dev/.config/SCP Secret Laboratory/LabAPI/dependencies/global/" />
+        <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll" DestinationFolder="$(HOME)/SCPSL-Dev/.config/SCP Secret Laboratory/LabAPI/plugins/global/" />
+    </Target>
+
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+</Project>

@@ -1,0 +1,58 @@
+name: Release plugin
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Download SCP:SL Dedicated Server
+      uses: TheUltimateNuke/steam-download@v1.0.0
+      with:
+        username: anonymous
+        appid: 996560
+        path: ${{ github.workspace }}/SCPSL
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore NuGet packages
+      run: nuget restore DarkCore.sln
+
+    - name: Build solution
+      run: msbuild DarkCore.sln /p:Configuration=Release /p:SL_MANAGED="${{ github.workspace }}\SCPSL\SCPSL_Data\Managed"
+
+    - name: Copy DLL to root
+      shell: pwsh
+      run: |
+        Get-ChildItem -Path . -Recurse -Filter *.dll |
+        Where-Object { $_.FullName -like "*\bin\x64\Release\*" } |
+        Copy-Item -Destination "${{ github.workspace }}" -Force
+
+    - name: Get AssemblyVersion
+      shell: pwsh
+      run: |
+        $version = [System.Reflection.AssemblyName]::GetAssemblyName("${{ github.workspace }}\DarkCore.dll").Version.ToString()
+        echo "VERSION_TAG=v$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+        echo "Plugin Version: v$version"
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2.4.1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag_name: ${{ env.VERSION_TAG }}
+        name: "${{ env.VERSION_TAG }}"
+        files: |
+          ${{ github.workspace }}\\DarkCore.dll
+          ${{ github.workspace }}\\0Harmony.dll
+          ${{ github.workspace }}\\LiteDB.dll
